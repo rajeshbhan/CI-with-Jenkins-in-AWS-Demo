@@ -1,6 +1,17 @@
 pipeline {
   agent any
      stages {
+      stage('SCM Checkout') {
+       steps {
+          checkout scm
+         }
+        }
+      stage('Build') {
+       steps {
+          echo "Cleaning and packaging.."
+          sh 'mvn clean package'
+         }
+       }
       stage('Test') {
        steps {
            echo "Testing.."
