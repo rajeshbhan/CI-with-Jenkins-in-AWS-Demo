@@ -40,7 +40,7 @@ pipeline {
            sh 'ls -ltr'
            sh 'pwd'
            sh "sed -i 's/tagversion/${env.BUILD_ID}/g' deployment.yaml"
-           step([$class: 'KubernetesEngineBuilder', projectID: "wired-tea-264519", clusterName: "k8-cluster", location: "us-central1-c", credentialsId: "rajeshk8test", verifyDeployments: true])
+           step([$class: 'KubernetesEngineBuilder', projectID: "wired-tea-264519", clusterName: "k8-cluster", location: "us-central1-c", credentialsId: "Docker", verifyDeployments: true])
            echo "Deployment Finished.."
           }
         }
