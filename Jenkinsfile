@@ -1,34 +1,32 @@
 pipeline {
   agent any
       environment {
-        
           PROJECT_ID = 'wired-tea-264519'
           CLUSTER_NAME = 'k8-cluster'
           LOCATION = 'us-central1-c'
           CREDENTIALS_ID = 'rajeshk8test'
      }
-     
      stages {
-          stage('SCM Checkout') {
+      stage('SCM Checkout') {
               steps {
-                  sh 'checkout scm'
+                  echo "scm.."
                  }
                }
                
-          stage('Build') {
+      stage('Build') {
               steps {
                   echo "Cleaning and packaging.."
                   sh 'mvn clean package'
                 }
                 
-          stage('Test') {
+      stage('Test') {
               steps {
                   echo "Testing.."
                   sh 'mvn test'
                  }
                }
                
-          stage('Build Docker Image') {
+      stage('Build Docker Image') {
               steps {
                   script {
                       myimage = docker.build("rajeshbhan/tomcat01:${env.BUILD_ID}")
@@ -36,7 +34,7 @@ pipeline {
                   }
                 }
                 
-          stage('Push Docker Image') {
+      stage('Push Docker Image') {
               steps {
                     script {
                         docker.withRegistry('https://registry.hub.docker.com', 'docker') {
@@ -46,7 +44,7 @@ pipeline {
                       }
                     }
              
-          stage('Deploy to K8s') {
+      stage('Deploy to K8s') {
               steps {
                     echo "Deployment started.."
                     sh 'ls -ltr'
